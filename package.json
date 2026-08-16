@@ -1,0 +1,21 @@
+{
+  "name": "gymdesk",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:kiosk": "pnpm --filter kiosk dev",
+    "dev:member": "pnpm --filter member dev",
+    "dev:admin": "pnpm --filter admin dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "deploy": "turbo run build && node scripts/deploy-pages.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.0"
+  }
+}

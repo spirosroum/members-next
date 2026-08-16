@@ -1,0 +1,5 @@
+/* Tailwind entry shared by all three portals. Each app imports this as
+   `@gym/shared-ui/tailwind` in its main.ts before its own style.css. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
