@@ -81,7 +81,7 @@ export const useAdminStore = defineStore('admin', () => {
   return {
     authed, pendingCheckin, pendingBackdated,
     members: membersApi.members, payments: paymentsApi.payments, plans: paymentsApi.plans,
-    openVisits: visitsApi.openVisits, schedules: schedulesApi.schedules, closedDates: schedulesApi.closedDates,
+    openVisits: visitsApi.openVisits, visits: visitsApi.visits, schedules: schedulesApi.schedules, closedDates: schedulesApi.closedDates,
     notice: settingsApi.notice, bin: memberAdminApi.bin,
     signIn, signOut, memberStatus, isUnpaid, startCheckin, confirmCheckin, checkout,
     saveCheckinNotice: settingsApi.saveCheckinNotice,

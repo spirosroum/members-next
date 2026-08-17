@@ -98,7 +98,11 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
 8. ✅ **Phase 7 — Schedules CRUD (DONE).**
    - Schedules view: create/edit/delete class schedules (name, color, capacity, public flag) with **weekly slot editing** (day + start/end times)
    - `useSchedules` composable gains `saveSchedule` (upsert + replace slots) and `deleteSchedule` (soft delete); kiosk + check-in class selection read the live data
-9. ⏭️ Then analytics, settings, i18n, mobile, deploy.
+9. ✅ **Phase 8 — Admin analytics (DONE).**
+   - Dashboard (default tab): KPIs — currently inside, visits today, unpaid count, active subscriptions, total members, gender breakdown (via domain `computeDashboardKpis`)
+   - Analytical calendar: month grid color-coded by visit volume, unpaid days highlighted red; click a day to filter the visit log
+   - Visit log: filterable by date + paid/unpaid status, newest-first
+10. ⏭️ Then settings, i18n, mobile, deploy.
 
 ## Known wiring steps (before `pnpm dev` works)
 

@@ -8,6 +8,7 @@ import DirectoryView from './views/DirectoryView.vue';
 import PlansView from './views/PlansView.vue';
 import ClosedDatesView from './views/ClosedDatesView.vue';
 import SchedulesView from './views/SchedulesView.vue';
+import DashboardView from './views/DashboardView.vue';
 import AdminCheckinModal from './components/AdminCheckinModal.vue';
 import BroadcastNotice from './components/BroadcastNotice.vue';
 
@@ -15,7 +16,7 @@ const admin = useAdminStore();
 const email = ref('');
 const password = ref('');
 const error = ref<string | null>(null);
-const tab = ref<'checkin' | 'payments' | 'members' | 'plans' | 'closed' | 'schedules'>('checkin');
+const tab = ref<'dashboard' | 'checkin' | 'payments' | 'members' | 'plans' | 'closed' | 'schedules'>('dashboard');
 
 async function submit() {
   error.value = null;
@@ -46,6 +47,7 @@ async function submit() {
         <h1 class="text-2xl font-extrabold">Admin Panel</h1>
         <div class="flex items-center gap-2">
           <div class="flex overflow-hidden rounded-lg border border-slate-300">
+            <button :class="tab === 'dashboard' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'dashboard'">Dashboard</button>
             <button :class="tab === 'checkin' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'checkin'">Check-in</button>
             <button :class="tab === 'payments' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'payments'">Payments</button>
             <button :class="tab === 'members' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'members'">Members</button>
@@ -58,7 +60,8 @@ async function submit() {
       </div>
 
       <BroadcastNotice />
-      <CheckinView v-if="tab === 'checkin'" class="mt-4" />
+      <DashboardView v-if="tab === 'dashboard'" class="mt-4" />
+      <CheckinView v-else-if="tab === 'checkin'" class="mt-4" />
       <PaymentsView v-else-if="tab === 'payments'" class="mt-4" />
       <DirectoryView v-else-if="tab === 'members'" class="mt-4" />
       <PlansView v-else-if="tab === 'plans'" class="mt-4" />
