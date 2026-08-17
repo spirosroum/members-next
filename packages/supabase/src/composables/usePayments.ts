@@ -21,6 +21,7 @@ export function usePayments(client: SupabaseClient) {
       plans.value = (plData as PlanRow[]).map(p => ({
         id: p.id,
         name: p.name,
+        description: p.description,
         days: p.days,
         sessions: p.sessions,
         price: p.price,
@@ -43,5 +44,29 @@ export function usePayments(client: SupabaseClient) {
     await load();
   }
 
-  return { payments, plans, load, save, remove };
+  // ---- Plan CRUD ----
+  async function savePlan(p: Partial<Plan> & { id: string }) {
+    const { error } = await client.from('plans').upsert({
+      id: p.id,
+      name: p.name,
+      description: p.description ?? null,
+      days: p.days ?? null,
+      sessions: p.sessions ?? null,
+      price: p.price ?? 0,
+      color: p.color ?? '#2563eb',
+      is_public: p.isPublic !== false,
+      is_trial: !!p.isTrial,
+      deleted_at: null
+    }, { onConflict: 'id' });
+    if (error) throw error;
+    await load();
+  }
+
+  async function deletePlan(planId: string) {
+    const { error } = await client.from('plans').update({ deleted_at: new Date().toISOString() }).eq('id', planId);
+    if (error) throw error;
+    await load();
+  }
+
+  return { payments, plans, load, save, remove, savePlan, deletePlan };
 }

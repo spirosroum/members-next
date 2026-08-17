@@ -122,7 +122,7 @@ function computeDates() {
     const chosen = new Date(start + 'T23:59:59');
     if (cur > chosen) start = member.value.expirationDate;
   }
-  expDate.value = calculateExpirationDate(start, plan.days * qty.value, []);
+  expDate.value = calculateExpirationDate(start, plan.days * qty.value, admin.closedDates);
 }
 
 watch(open, o => { if (!o) member.value = null; });

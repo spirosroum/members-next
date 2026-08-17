@@ -56,7 +56,7 @@ function applyPlan() {
   const plan = selectedPlan.value;
   if (!plan) return;
   if (plan.days && plan.days > 0) {
-    form.value.expirationDate = calculateExpirationDate(formStartDate.value, plan.days, []);
+    form.value.expirationDate = calculateExpirationDate(formStartDate.value, plan.days, admin.closedDates);
     form.value.planDays = plan.days;
   }
   if (plan.sessions && plan.sessions > 0) {

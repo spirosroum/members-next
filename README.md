@@ -89,7 +89,13 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
    - Training Stats: total trainings, hours, overall attendance %, per-class bars + Best Class (via domain `getMemberAttendance`)
    - Check-in history table (paid/unpaid badges)
    - Settings: change member ID (via `rename_member` RPC) + hide-from-leaderboard toggle
-7. ⏭️ Then plans/closed dates, schedules, analytics, settings, i18n, mobile, deploy.
+7. ✅ **Phase 6 — Closed dates wired + Plans CRUD (DONE).**
+   - `calculateExpirationDate` now receives real closed dates in the payment modal and member plan-apply (holidays no longer count against memberships — fixing the correctness gap the port introduced)
+   - Member attendance already passed `closedDates` to `getMemberAttendance` correctly
+   - Plans view: create/edit/delete plans (validity days, sessions, price, color, public/trial flags)
+   - Closed Dates view: add single or ranged days, yearly-repeat flag, reason; the kiosk schedule and attendance use them
+   - Pinned dev ports: kiosk 5173, admin 5174, member 5175 (`strictPort`)
+8. ⏭️ Then schedules, analytics, settings, i18n, mobile, deploy.
 
 ## Known wiring steps (before `pnpm dev` works)
 

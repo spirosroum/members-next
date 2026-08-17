@@ -45,5 +45,23 @@ export function useSchedules(client: SupabaseClient) {
     }
   }
 
-  return { schedules, closedDates, load };
+  async function saveClosedDate(c: { date: string; dateEnd?: string; repeat?: boolean; reason?: string }) {
+    const { error } = await client.from('closed_dates').upsert({
+      id: c.date + (c.dateEnd && c.dateEnd !== c.date ? '-' + c.dateEnd : ''),
+      date: c.date,
+      date_end: c.dateEnd || null,
+      repeat: !!c.repeat,
+      reason: c.reason || null
+    }, { onConflict: 'id' });
+    if (error) throw error;
+    await load();
+  }
+
+  async function deleteClosedDate(id: string) {
+    const { error } = await client.from('closed_dates').delete().eq('id', id);
+    if (error) throw error;
+    await load();
+  }
+
+  return { schedules, closedDates, load, saveClosedDate, deleteClosedDate };
 }

@@ -56,6 +56,7 @@ export interface Payment {
 export interface Plan {
   id: string;
   name: string;
+  description: string | null;
   days: number | null;
   sessions: number | null;
   price: number;
