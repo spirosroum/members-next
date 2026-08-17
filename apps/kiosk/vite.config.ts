@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/', // kiosk served at site root
+  base: '/members-next/', // project-site root
   server: { port: 5173, strictPort: true },
   build: { outDir: 'dist' }
 });
