@@ -37,9 +37,7 @@ pnpm install
 pnpm dev:kiosk   # or dev:member / dev:admin
 ```
 
-Dev credentials for the isolated project (see `.env.local`):
-- Admin: `[REDACTED]` / `[REDACTED]`
-- Test members: IDs `1001`–`1006` (various states: active time-based, active sessions, inactive, frozen)
+Dev credentials for the isolated project are stored in the local-only `.env.local` (gitignored) and the Supabase dashboard — **never commit them.**
 
 Seeding: `SUPABASE_ACCESS_TOKEN=… node scripts/seed-dev.mjs` (idempotent). Schema migrations: `node scripts/apply-migrations.mjs`.
 
