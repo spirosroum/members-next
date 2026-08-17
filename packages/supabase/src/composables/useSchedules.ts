@@ -63,5 +63,45 @@ export function useSchedules(client: SupabaseClient) {
     await load();
   }
 
-  return { schedules, closedDates, load, saveClosedDate, deleteClosedDate };
+  // Upsert a schedule and replace its slots (delete old, insert new).
+  async function saveSchedule(s: {
+    id: string;
+    name: string;
+    description?: string | null;
+    color?: string;
+    capacity?: number | null;
+    isPublic?: boolean;
+    availableFrom?: string | null;
+    slots: { day: string; start: string; end: string }[];
+  }) {
+    const { error } = await client.from('schedules').upsert({
+      id: s.id,
+      name: s.name,
+      description: s.description ?? null,
+      color: s.color ?? '#2563eb',
+      capacity: s.capacity ?? null,
+      is_public: s.isPublic !== false,
+      available_from: s.availableFrom || null,
+      deleted_at: null
+    }, { onConflict: 'id' });
+    if (error) throw error;
+    // Replace slots: delete existing then insert.
+    const { error: delErr } = await client.from('schedule_slots').delete().eq('schedule_id', s.id);
+    if (delErr) throw delErr;
+    if (s.slots.length) {
+      const { error: insErr } = await client.from('schedule_slots').insert(
+        s.slots.map((sl, i) => ({ id: `${s.id}-slot-${i}`, schedule_id: s.id, day: sl.day, start: sl.start, end: sl.end }))
+      );
+      if (insErr) throw insErr;
+    }
+    await load();
+  }
+
+  async function deleteSchedule(id: string) {
+    const { error } = await client.from('schedules').update({ deleted_at: new Date().toISOString() }).eq('id', id);
+    if (error) throw error;
+    await load();
+  }
+
+  return { schedules, closedDates, load, saveClosedDate, deleteClosedDate, saveSchedule, deleteSchedule };
 }

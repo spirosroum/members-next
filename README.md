@@ -95,7 +95,10 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
    - Plans view: create/edit/delete plans (validity days, sessions, price, color, public/trial flags)
    - Closed Dates view: add single or ranged days, yearly-repeat flag, reason; the kiosk schedule and attendance use them
    - Pinned dev ports: kiosk 5173, admin 5174, member 5175 (`strictPort`)
-8. ⏭️ Then schedules, analytics, settings, i18n, mobile, deploy.
+8. ✅ **Phase 7 — Schedules CRUD (DONE).**
+   - Schedules view: create/edit/delete class schedules (name, color, capacity, public flag) with **weekly slot editing** (day + start/end times)
+   - `useSchedules` composable gains `saveSchedule` (upsert + replace slots) and `deleteSchedule` (soft delete); kiosk + check-in class selection read the live data
+9. ⏭️ Then analytics, settings, i18n, mobile, deploy.
 
 ## Known wiring steps (before `pnpm dev` works)
 

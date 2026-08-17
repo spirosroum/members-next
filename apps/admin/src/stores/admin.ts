@@ -88,6 +88,7 @@ export const useAdminStore = defineStore('admin', () => {
     savePayment: paymentsApi.save, deletePayment: paymentsApi.remove,
     savePlan: paymentsApi.savePlan, deletePlan: paymentsApi.deletePlan,
     saveClosedDate: schedulesApi.saveClosedDate, deleteClosedDate: schedulesApi.deleteClosedDate,
+    saveSchedule: schedulesApi.saveSchedule, deleteSchedule: schedulesApi.deleteSchedule,
     loadBin: memberAdminApi.loadBin,
     saveMember: memberAdminApi.saveMember,
     renameMember: memberAdminApi.rename,

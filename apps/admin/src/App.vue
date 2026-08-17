@@ -7,6 +7,7 @@ import PaymentsView from './views/PaymentsView.vue';
 import DirectoryView from './views/DirectoryView.vue';
 import PlansView from './views/PlansView.vue';
 import ClosedDatesView from './views/ClosedDatesView.vue';
+import SchedulesView from './views/SchedulesView.vue';
 import AdminCheckinModal from './components/AdminCheckinModal.vue';
 import BroadcastNotice from './components/BroadcastNotice.vue';
 
@@ -14,7 +15,7 @@ const admin = useAdminStore();
 const email = ref('');
 const password = ref('');
 const error = ref<string | null>(null);
-const tab = ref<'checkin' | 'payments' | 'members' | 'plans' | 'closed'>('checkin');
+const tab = ref<'checkin' | 'payments' | 'members' | 'plans' | 'closed' | 'schedules'>('checkin');
 
 async function submit() {
   error.value = null;
@@ -50,6 +51,7 @@ async function submit() {
             <button :class="tab === 'members' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'members'">Members</button>
             <button :class="tab === 'plans' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'plans'">Plans</button>
             <button :class="tab === 'closed' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'closed'">Closed Days</button>
+            <button :class="tab === 'schedules' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'schedules'">Schedules</button>
           </div>
           <Button variant="outline" @click="admin.signOut()">Logout</Button>
         </div>
@@ -60,7 +62,8 @@ async function submit() {
       <PaymentsView v-else-if="tab === 'payments'" class="mt-4" />
       <DirectoryView v-else-if="tab === 'members'" class="mt-4" />
       <PlansView v-else-if="tab === 'plans'" class="mt-4" />
-      <ClosedDatesView v-else class="mt-4" />
+      <ClosedDatesView v-else-if="tab === 'closed'" class="mt-4" />
+      <SchedulesView v-else class="mt-4" />
     </div>
 
     <AdminCheckinModal />
