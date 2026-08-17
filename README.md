@@ -74,7 +74,11 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
    - Check-in modal with class selection + **backdate** (choose a past training date) → `check_in_member`, open-gym fallback
    - Checkout for currently-inside members, live "Currently Inside" list
    - **Broadcast notice** editor (message + color) → displayed as a banner on the kiosk
-4. ⏭️ **Phase 3 — Payments + ledger**
+4. ✅ **Phase 3 — Payments + ledger (DONE).** In `apps/admin`:
+   - Payment modal: member search, plan picker with quantity, sessions field, date/start/expiration auto-fill with renewal stacking (uses domain `calculateExpirationDate`)
+   - Editing restores qty/sessions from the existing grant (no more halved bundles); delete via `delete_payment` RPC
+   - Ledger view sorted by date, showing coverage (expiration or sessions), note, edit/delete
+   - All writes go through `apply_payment` / `delete_payment` RPCs — server `recompute_member` is the single source of truth
 5. ⏭️ Then member directory, member portal, plans/closed dates, schedules, analytics, settings, i18n, mobile, deploy.
 
 ## Known wiring steps (before `pnpm dev` works)

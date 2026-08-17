@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useAdminStore } from './stores/admin';
 import { Button } from '@gym/shared-ui';
 import CheckinView from './views/CheckinView.vue';
+import PaymentsView from './views/PaymentsView.vue';
 import AdminCheckinModal from './components/AdminCheckinModal.vue';
 import BroadcastNotice from './components/BroadcastNotice.vue';
 
@@ -10,6 +11,7 @@ const admin = useAdminStore();
 const email = ref('');
 const password = ref('');
 const error = ref<string | null>(null);
+const tab = ref<'checkin' | 'payments'>('checkin');
 
 async function submit() {
   error.value = null;
@@ -38,10 +40,18 @@ async function submit() {
     <div v-else class="mx-auto max-w-6xl">
       <div class="mb-4 flex items-center justify-between">
         <h1 class="text-2xl font-extrabold">Admin Panel</h1>
-        <Button variant="outline" @click="admin.signOut()">Logout</Button>
+        <div class="flex items-center gap-2">
+          <div class="flex overflow-hidden rounded-lg border border-slate-300">
+            <button :class="tab === 'checkin' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'checkin'">Check-in</button>
+            <button :class="tab === 'payments' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'payments'">Payments</button>
+          </div>
+          <Button variant="outline" @click="admin.signOut()">Logout</Button>
+        </div>
       </div>
+
       <BroadcastNotice />
-      <CheckinView class="mt-4" />
+      <CheckinView v-if="tab === 'checkin'" class="mt-4" />
+      <PaymentsView v-else class="mt-4" />
     </div>
 
     <AdminCheckinModal />

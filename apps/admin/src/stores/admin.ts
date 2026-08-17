@@ -78,10 +78,11 @@ export const useAdminStore = defineStore('admin', () => {
 
   return {
     authed, pendingCheckin, pendingBackdated,
-    members: membersApi.members, payments: paymentsApi.payments,
+    members: membersApi.members, payments: paymentsApi.payments, plans: paymentsApi.plans,
     openVisits: visitsApi.openVisits, schedules: schedulesApi.schedules,
     notice: settingsApi.notice,
     signIn, signOut, memberStatus, isUnpaid, startCheckin, confirmCheckin, checkout,
-    saveCheckinNotice: settingsApi.saveCheckinNotice
+    saveCheckinNotice: settingsApi.saveCheckinNotice,
+    savePayment: paymentsApi.save, deletePayment: paymentsApi.remove
   };
 });
