@@ -9,3 +9,5 @@ export { usePayments } from './composables/usePayments';
 export { useClassCheckins } from './composables/useClassCheckins';
 export { useSchedules } from './composables/useSchedules';
 export { useSettings } from './composables/useSettings';
+export { useMemberAdmin } from './composables/useMemberAdmin';
+export type { BinMember } from './composables/useMemberAdmin';

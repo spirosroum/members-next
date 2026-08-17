@@ -79,7 +79,11 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
    - Editing restores qty/sessions from the existing grant (no more halved bundles); delete via `delete_payment` RPC
    - Ledger view sorted by date, showing coverage (expiration or sessions), note, edit/delete
    - All writes go through `apply_payment` / `delete_payment` RPCs — server `recompute_member` is the single source of truth
-5. ⏭️ Then member directory, member portal, plans/closed dates, schedules, analytics, settings, i18n, mobile, deploy.
+5. ✅ **Phase 4 — Member directory + member modal (DONE).** In `apps/admin`:
+   - Directory: search by name/ID/phone/email, status tabs, sortable columns, CSV export
+   - Member modal: register/edit (belt, status, expiration, sessions, phone/email/dob/notes), plan apply with renewal stacking, **ID rename via `rename_member` RPC** (cascades server-side)
+   - Recycle bin: soft-delete (deleted_at) + restore
+6. ⏭️ Then member portal, plans/closed dates, schedules, analytics, settings, i18n, mobile, deploy.
 
 ## Known wiring steps (before `pnpm dev` works)
 

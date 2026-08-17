@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { adminClientInstance, useMembers, usePayments, useVisits, useSchedules, useSettings } from '@gym/supabase';
+import { adminClientInstance, useMembers, usePayments, useVisits, useSchedules, useSettings, useMemberAdmin } from '@gym/supabase';
 import { checkInMember, type CheckInSelection } from '@gym/supabase';
 import { getDaysRemaining, computeVisitUnpaid } from '@gym/supabase';
 import type { Member } from '@gym/supabase';
@@ -16,6 +16,7 @@ export const useAdminStore = defineStore('admin', () => {
   const visitsApi = useVisits(client);
   const schedulesApi = useSchedules(client);
   const settingsApi = useSettings(client);
+  const memberAdminApi = useMemberAdmin(client);
 
   const pendingCheckin = ref<Member | null>(null);
   const pendingBackdated = ref(false);
@@ -31,7 +32,8 @@ export const useAdminStore = defineStore('admin', () => {
       paymentsApi.load(),
       visitsApi.refresh(),
       schedulesApi.load(),
-      settingsApi.load()
+      settingsApi.load(),
+      memberAdminApi.loadBin()
     ]);
   }
 
@@ -80,9 +82,14 @@ export const useAdminStore = defineStore('admin', () => {
     authed, pendingCheckin, pendingBackdated,
     members: membersApi.members, payments: paymentsApi.payments, plans: paymentsApi.plans,
     openVisits: visitsApi.openVisits, schedules: schedulesApi.schedules,
-    notice: settingsApi.notice,
+    notice: settingsApi.notice, bin: memberAdminApi.bin,
     signIn, signOut, memberStatus, isUnpaid, startCheckin, confirmCheckin, checkout,
     saveCheckinNotice: settingsApi.saveCheckinNotice,
-    savePayment: paymentsApi.save, deletePayment: paymentsApi.remove
+    savePayment: paymentsApi.save, deletePayment: paymentsApi.remove,
+    loadBin: memberAdminApi.loadBin,
+    saveMember: memberAdminApi.saveMember,
+    renameMember: memberAdminApi.rename,
+    softDeleteMember: memberAdminApi.softDelete,
+    restoreMember: memberAdminApi.restore
   };
 });
