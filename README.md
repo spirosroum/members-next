@@ -83,7 +83,13 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
    - Directory: search by name/ID/phone/email, status tabs, sortable columns, CSV export
    - Member modal: register/edit (belt, status, expiration, sessions, phone/email/dob/notes), plan apply with renewal stacking, **ID rename via `rename_member` RPC** (cascades server-side)
    - Recycle bin: soft-delete (deleted_at) + restore
-6. ⏭️ Then member portal, plans/closed dates, schedules, analytics, settings, i18n, mobile, deploy.
+6. ✅ **Phase 5 — Member portal (DONE).** In `apps/member`:
+   - Login by member ID; dashboard with real data
+   - Member Info card: belt, ID, status, expiration, sessions progress bar, expiry banner (≤7 days)
+   - Training Stats: total trainings, hours, overall attendance %, per-class bars + Best Class (via domain `getMemberAttendance`)
+   - Check-in history table (paid/unpaid badges)
+   - Settings: change member ID (via `rename_member` RPC) + hide-from-leaderboard toggle
+7. ⏭️ Then plans/closed dates, schedules, analytics, settings, i18n, mobile, deploy.
 
 ## Known wiring steps (before `pnpm dev` works)
 

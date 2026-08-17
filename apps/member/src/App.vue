@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { useMemberStore } from './stores/session';
-import { useMemberInfo } from './composables/memberInfo';
 import MemberInfoCard from './components/MemberInfoCard.vue';
 import TrainingStats from './components/TrainingStats.vue';
+import HistoryCard from './components/HistoryCard.vue';
+import SettingsCard from './components/SettingsCard.vue';
 import LoginCard from './components/LoginCard.vue';
 
 const session = useMemberStore();
-const { info, loadInfo } = useMemberInfo();
 const isLoggedIn = computed(() => !!session.current);
 
 onMounted(async () => {
-  await session.load();
-  if (session.current) await loadInfo(session.current.id);
+  await session.boot();
 });
 </script>
 
@@ -25,8 +24,10 @@ onMounted(async () => {
 
     <LoginCard v-if="!isLoggedIn" />
     <template v-else>
-      <MemberInfoCard :member="session.current!" :info="info" />
-      <TrainingStats :member="session.current!" />
+      <MemberInfoCard />
+      <TrainingStats />
+      <HistoryCard />
+      <SettingsCard />
     </template>
   </div>
 </template>
