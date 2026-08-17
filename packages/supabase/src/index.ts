@@ -8,3 +8,4 @@ export { useVisits } from './composables/useVisits';
 export { usePayments } from './composables/usePayments';
 export { useClassCheckins } from './composables/useClassCheckins';
 export { useSchedules } from './composables/useSchedules';
+export { useSettings } from './composables/useSettings';

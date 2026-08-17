@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { kioskClient, useMembers, useVisits, useSchedules, useClassCheckins } from '@gym/supabase';
+import { kioskClient, useMembers, useVisits, useSchedules, useClassCheckins, useSettings } from '@gym/supabase';
 import { checkInMember, type CheckInSelection } from '@gym/supabase';
 import { computeVisitUnpaid } from '@gym/supabase';
 import type { Member } from '@gym/supabase';
@@ -13,6 +13,7 @@ export const useKioskStore = defineStore('kiosk', () => {
   const { visits, openVisits, refresh: refreshVisits, subscribe } = useVisits(client);
   const { schedules, load: loadSchedules } = useSchedules(client);
   const { checkins, refresh: refreshCheckins } = useClassCheckins(client);
+  const { notice, load: loadSettings } = useSettings(client);
 
   const state = ref<KioskState>('idle');
   const lastError = ref<string | null>(null);
@@ -33,7 +34,7 @@ export const useKioskStore = defineStore('kiosk', () => {
 
   async function boot() {
     try {
-      await Promise.all([loadMembers(), loadSchedules()]);
+      await Promise.all([loadMembers(), loadSchedules(), loadSettings()]);
       await refreshVisits();
       await refreshCheckins();
     } catch (e) {
@@ -149,7 +150,7 @@ export const useKioskStore = defineStore('kiosk', () => {
   }
 
   return {
-    members, membersById, openVisits, visits, schedules, checkins,
+    members, membersById, openVisits, visits, schedules, checkins, notice,
     state, lastError, lastAlert, pendingMember, pendingMemberUnpaid,
     selectedClassIds, memberLookupError, todayClasses, selectedSelections,
     isUnpaidVisit,

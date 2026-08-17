@@ -27,6 +27,14 @@ watch(() => kiosk.state, s => {
       <p class="text-slate-500">Scan your ID or type it below to check in</p>
     </header>
 
+    <div
+      v-if="kiosk.notice.checkinNotice"
+      class="mx-auto max-w-3xl rounded-lg px-4 py-3 text-center font-semibold"
+      :style="{ backgroundColor: kiosk.notice.checkinNoticeColor, color: '#000' }"
+    >
+      {{ kiosk.notice.checkinNotice }}
+    </div>
+
     <MemberIdInput class="mx-auto w-full max-w-md" />
 
     <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

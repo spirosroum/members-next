@@ -37,6 +37,12 @@ pnpm install
 pnpm dev:kiosk   # or dev:member / dev:admin
 ```
 
+Dev credentials for the isolated project (see `.env.local`):
+- Admin: `[REDACTED]` / `[REDACTED]`
+- Test members: IDs `1001`–`1006` (various states: active time-based, active sessions, inactive, frozen)
+
+Seeding: `SUPABASE_ACCESS_TOKEN=… node scripts/seed-dev.mjs` (idempotent). Schema migrations: `node scripts/apply-migrations.mjs`.
+
 Env vars (per-app `.env.local` or CI vars):
 ```
 VITE_SUPABASE_URL=
@@ -61,7 +67,13 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
    - `check_in_member` RPC submission, unpaid/expired alert, success banner, already-checked-in handling
    - Live "Currently Inside" via realtime (`useVisits`), Training Schedule card, Training Leaderboard (using domain `getMemberTrainingCount`)
    - `useSchedules` composable added to `@gym/supabase` (schedules + slots + closed dates)
-3. ⏭️ **Phase 2 — Staff/Admin check-in**
+3. ✅ **Phase 2 — Staff/Admin check-in (DONE).** In `apps/admin`:
+   - Admin auth via Supabase email/password + `profiles.role='admin'`
+   - Search members by name / ID / phone (private fields merged via `loadPrivate`, RLS-gated)
+   - Result card with live status badge (frozen / cancelled / inactive / expired / no-sessions / active)
+   - Check-in modal with class selection + **backdate** (choose a past training date) → `check_in_member`, open-gym fallback
+   - Checkout for currently-inside members, live "Currently Inside" list
+   - **Broadcast notice** editor (message + color) → displayed as a banner on the kiosk
 4. ⏭️ **Phase 3 — Payments + ledger**
 5. ⏭️ Then member directory, member portal, plans/closed dates, schedules, analytics, settings, i18n, mobile, deploy.
 
