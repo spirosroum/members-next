@@ -67,8 +67,9 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
 
 ## Known wiring steps (before `pnpm dev` works)
 
+- ✅ **Done:** the new app is fully isolated from production. A separate Supabase project was created (`gymdesk-next`, ref `vybzakdbifmnruponyzl`) and all 6 production migrations were applied to it verbatim (tables, RLS, RPCs, cron, realtime). The `.env.local` files point at the new project only. **Production (`lwmwihdfwafnhtykslbz`) is untouched.**
 - Vite resolves PostCSS/Tailwind config from each app root. Copy `tailwind.config.js` + `postcss.config.js` (or a symlink) into `apps/kiosk/`, `apps/member/`, `apps/admin/`.
 - Install `tailwindcss` + `autoprefixer` as devDeps in each app.
-- Add `supabase/migrations/` contents from the production repo (not included here to avoid duplicating secrets).
+- Re-apply schema changes to the new project via `scripts/apply-migrations.mjs` (run with `SUPABASE_ACCESS_TOKEN`).
 - The `Attendance Feedback` config still reads `attendanceEmojis` in the production app; the rewrite drops emojis, so the `attendance_emojis` setting can be removed from `settings` on migration.
 
