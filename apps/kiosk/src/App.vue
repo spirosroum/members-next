@@ -10,6 +10,8 @@ import { Modal, Button } from '@gym/shared-ui';
 
 const kiosk = useKioskStore();
 
+const mobileLink = `${window.location.origin}${window.location.pathname}#/mobile`;
+
 onMounted(() => kiosk.boot());
 
 watch(() => kiosk.state, s => {
@@ -25,14 +27,15 @@ watch(() => kiosk.state, s => {
     <header class="text-center">
       <h1 class="text-3xl font-extrabold text-slate-900">🥋 Sloth Submission Grappling</h1>
       <p class="text-slate-500">Scan your ID or type it below to check in</p>
+      <a :href="mobileLink" class="mt-1 inline-block text-sm font-semibold text-emerald-600 underline">Mobile check-in link ↗</a>
     </header>
 
     <div
-      v-if="kiosk.notice.checkinNotice"
+      v-if="kiosk.settings.checkinNotice"
       class="mx-auto max-w-3xl rounded-lg px-4 py-3 text-center font-semibold"
-      :style="{ backgroundColor: kiosk.notice.checkinNoticeColor, color: '#000' }"
+      :style="{ backgroundColor: kiosk.settings.checkinNoticeColor, color: '#000' }"
     >
-      {{ kiosk.notice.checkinNotice }}
+      {{ kiosk.settings.checkinNotice }}
     </div>
 
     <MemberIdInput class="mx-auto w-full max-w-md" />

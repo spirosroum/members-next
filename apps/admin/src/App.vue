@@ -9,6 +9,7 @@ import PlansView from './views/PlansView.vue';
 import ClosedDatesView from './views/ClosedDatesView.vue';
 import SchedulesView from './views/SchedulesView.vue';
 import DashboardView from './views/DashboardView.vue';
+import SettingsView from './views/SettingsView.vue';
 import AdminCheckinModal from './components/AdminCheckinModal.vue';
 import BroadcastNotice from './components/BroadcastNotice.vue';
 
@@ -16,7 +17,7 @@ const admin = useAdminStore();
 const email = ref('');
 const password = ref('');
 const error = ref<string | null>(null);
-const tab = ref<'dashboard' | 'checkin' | 'payments' | 'members' | 'plans' | 'closed' | 'schedules'>('dashboard');
+const tab = ref<'dashboard' | 'checkin' | 'payments' | 'members' | 'plans' | 'closed' | 'schedules' | 'settings'>('dashboard');
 
 async function submit() {
   error.value = null;
@@ -54,6 +55,7 @@ async function submit() {
             <button :class="tab === 'plans' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'plans'">Plans</button>
             <button :class="tab === 'closed' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'closed'">Closed Days</button>
             <button :class="tab === 'schedules' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'schedules'">Schedules</button>
+            <button :class="tab === 'settings' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600'" class="px-4 py-1.5 text-sm font-semibold" @click="tab = 'settings'">Settings</button>
           </div>
           <Button variant="outline" @click="admin.signOut()">Logout</Button>
         </div>
@@ -66,7 +68,8 @@ async function submit() {
       <DirectoryView v-else-if="tab === 'members'" class="mt-4" />
       <PlansView v-else-if="tab === 'plans'" class="mt-4" />
       <ClosedDatesView v-else-if="tab === 'closed'" class="mt-4" />
-      <SchedulesView v-else class="mt-4" />
+      <SchedulesView v-else-if="tab === 'schedules'" class="mt-4" />
+      <SettingsView v-else class="mt-4" />
     </div>
 
     <AdminCheckinModal />

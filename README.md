@@ -102,7 +102,10 @@ GitHub Actions runs on every push to `main`: install → `node scripts/deploy-pa
    - Dashboard (default tab): KPIs — currently inside, visits today, unpaid count, active subscriptions, total members, gender breakdown (via domain `computeDashboardKpis`)
    - Analytical calendar: month grid color-coded by visit volume, unpaid days highlighted red; click a day to filter the visit log
    - Visit log: filterable by date + paid/unpaid status, newest-first
-10. ⏭️ Then settings, i18n, mobile, deploy.
+10. ✅ **Phase 9–10 — Settings + mobile check-in (DONE).** (i18n EN/EL deferred.)
+   - Admin Settings: portal name, currency, attendance feedback colors (tier color pickers)
+   - Kiosk now exposes a **mobile check-in** at `#/mobile` (hash route): phone-friendly ID numpad → class selection → check-in, reusing the shared kiosk store; a link on the kiosk header points phones to it
+11. ⏭️ Then i18n (EN/EL), deploy.
 
 ## Known wiring steps (before `pnpm dev` works)
 

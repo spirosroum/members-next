@@ -13,7 +13,7 @@ export const useKioskStore = defineStore('kiosk', () => {
   const { visits, openVisits, refresh: refreshVisits, subscribe } = useVisits(client);
   const { schedules, load: loadSchedules } = useSchedules(client);
   const { checkins, refresh: refreshCheckins } = useClassCheckins(client);
-  const { notice, load: loadSettings } = useSettings(client);
+  const { settings, load: loadSettings } = useSettings(client);
 
   const state = ref<KioskState>('idle');
   const lastError = ref<string | null>(null);
@@ -150,7 +150,7 @@ export const useKioskStore = defineStore('kiosk', () => {
   }
 
   return {
-    members, membersById, openVisits, visits, schedules, checkins, notice,
+    members, membersById, openVisits, visits, schedules, checkins, settings,
     state, lastError, lastAlert, pendingMember, pendingMemberUnpaid,
     selectedClassIds, memberLookupError, todayClasses, selectedSelections,
     isUnpaidVisit,

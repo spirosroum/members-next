@@ -4,8 +4,8 @@ import { useAdminStore } from '../stores/admin';
 import { Button } from '@gym/shared-ui';
 
 const admin = useAdminStore();
-const msg = ref(admin.notice.checkinNotice);
-const color = ref(admin.notice.checkinNoticeColor);
+const msg = ref(admin.settings.checkinNotice);
+const color = ref(admin.settings.checkinNoticeColor);
 const saved = ref(false);
 
 function save() {
