@@ -5,6 +5,7 @@ import MemberIdInput from './components/MemberIdInput.vue';
 import PresentList from './components/PresentList.vue';
 import ScheduleCard from './components/ScheduleCard.vue';
 import Leaderboard from './components/Leaderboard.vue';
+import TrainingChart from './components/TrainingChart.vue';
 import CheckinModal from './components/CheckinModal.vue';
 import { Modal, Button } from '@gym/shared-ui';
 
@@ -45,6 +46,8 @@ watch(() => kiosk.state, s => {
       <ScheduleCard />
       <Leaderboard />
     </section>
+
+    <TrainingChart />
 
     <CheckinModal />
 

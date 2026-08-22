@@ -17,6 +17,14 @@ const standings = computed(() => {
     .filter(e => e.count > 0)
     .sort((a, b) => b.count - a.count || a.member.lastName.localeCompare(b.member.lastName));
 });
+
+// The crown is held by a *unique* leader only — a tied top score leaves it vacant.
+const leaderId = computed(() => {
+  if (standings.value.length < 2) return standings.value[0]?.member.id ?? null;
+  const first = standings.value[0]!;
+  const second = standings.value[1]!;
+  return first.count > second.count ? first.member.id : null;
+});
 </script>
 
 <template>
@@ -24,7 +32,7 @@ const standings = computed(() => {
     <h2 class="mb-2 text-lg font-bold">Training Leaderboard</h2>
     <ol v-if="standings.length" class="space-y-1">
       <li v-for="(e, i) in standings.slice(0, 10)" :key="e.member.id" class="flex items-center justify-between py-1">
-        <span class="font-medium"><span class="mr-2 inline-block w-6 text-center font-bold text-slate-400">{{ i + 1 }}</span>{{ e.member.firstName }} {{ e.member.lastName }}</span>
+        <span class="font-medium"><span class="mr-2 inline-block w-6 text-center font-bold text-slate-400">{{ i + 1 }}</span>{{ e.member.firstName }} {{ e.member.lastName }}<span v-if="e.member.id === leaderId" class="ml-1">👑</span></span>
         <span class="text-sm font-bold text-emerald-600">{{ e.count }}</span>
       </li>
     </ol>
